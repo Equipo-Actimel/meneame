@@ -2,13 +2,14 @@
 //Dependencias usadas
 const express = require('express')
 const mongoose = require('mongoose')
-
+const cors = require('cors')
 
 //HAY QUE CONECTAR MONGOOSE AQUÍ
 const app = express()
 
 //Configuramos middlewares
 app.use(express.json())
+app.use(cors())
 
 //Traemos las rutas de ficheros externos
 const newsRoute = require('./routes/news')
@@ -19,7 +20,7 @@ app.use(newsRoute)
 
 
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 
 app.get('/', (req, res) => {
     res.send('¡Hola mundo!')

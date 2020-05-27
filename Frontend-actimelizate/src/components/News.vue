@@ -36,16 +36,33 @@
 <script>
 import axios from 'axios'
 
+
 export default {
 	data () {
 		return {
-		news: []
+			news: []
 		}
 	},
-	mounted () {
-		axios
-		.get('http://localhost:3000/news')
-    .then(response => this.news = response.data)
+	created: function(){
+		axios.get('http://localhost:3000/news')
+  .then(function (response) {
+	// handle success
+	this.news = response.data
+    console.log(response);
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function () {
+    // always executed
+  });
 	}
+/* 	async mounted () {
+		
+		let response = await axios('http://localhost:3000/news')
+		console.log(response.data)
+    this.news = response.data
+	}  */
 }
 </script>
