@@ -4,9 +4,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const config = require("./config")
 const cors = require('cors')
+const app = express()
 
 //HAY QUE CONECTAR MONGOOSE AQUÍ
-const app = express()
 
 //Configuramos middlewares
 app.use(express.json())

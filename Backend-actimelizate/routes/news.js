@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Noticia = require("../models/noticias");
-
+const mustAuth = require("../middlewares/mustAuth");
 
 router.route('/news')
     .get(async(req, res) => {
@@ -12,7 +12,7 @@ router.route('/news')
             res.status(404).json({ message: e.message })
         }
     })
-    .post(async(req, res) => {
+    .post(mustAuth(), async(req, res) => {
         try {
             let newProduct = await new Noticia(req.body).save()
             res.status(200).json(newProduct)
@@ -40,7 +40,7 @@ router.route('/news/:id')
             res.status(404).json({ message: e.message })
         }
     })
-    .put(async(req, res) => {
+    .put(mustAuth(), async(req, res) => {
         try {
             let searchId = req.params.id
             let updateItem = await Noticia.findOneAndUpdate(searchId, req.body, { new: true })
@@ -54,7 +54,7 @@ router.route('/news/:id')
             res.status(500).json({ 'message': 'No se ha podido resolver la solicitud' })
         }
     })
-    .delete(async(req, res) => {
+    .delete(mustAuth(), async(req, res) => {
         try {
             let searchId = req.params.id
             let deleteItem = await Noticia.deleteOne({ _id: searchId })

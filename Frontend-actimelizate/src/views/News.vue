@@ -5,10 +5,10 @@
         <h2>¡Gente!, estas son nuestras <strong>NOTICIAS</strong>!</h2>
       </header>
       <div class="row aln-center">
-        <div class="col-4 col-6-medium col-12-small">
+        <div class="col-10 col-6-medium col-12-small">
           <!-- Feature -->
-          <ul>
-            <li v-for="item in news" :key="item.id">
+          <ul class="row">
+            <li v-for="item in news" :key="item.id" class="col-4">
               <a href="#" class="image featured"
                 ><img src="../../public/assets/images/pic01.jpg" alt=""
               /></a>
@@ -26,7 +26,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -41,6 +40,9 @@ export default {
 </script>
 
 <style>
+ul li {
+    margin: 0
+}
   li{
     list-style: none;
   }
