@@ -1,19 +1,53 @@
 const express = require('express')
 const router = express.Router()
 const Usuario = require("../models/users");
+const jwt = require("jsonwebtoken");
+const mustAuth = require("./middlewares/mustAuth");
+const bearerToken = require("express-bearer-token");
+const config = require("./config");
+
+app.use(json());
+app.use(bearerToken());
+
+const JWT_PASSWORD = "supersecretpassword";
+
+firebase.initializeApp(config.firebaseConfig)
+
+async function checkEmailAndPassword(email, pass) {
+    let auth = await firebase.auth().signInWithEmailAndPassword(email, pass);
+    return auth;
+}
+// Debe llamar a firebase y comprobar usuario y contraseña
+router.route('/auth/login')
+    .post(async(req, res) => {
+
+    })
 
 router.route('/users')
-    .get(async(req, res) => {
-        try {
-            let usuarios = await Usuario.find().exec()
-            res.json(usuarios);
-        } catch (err) {
-            res.status(404).json({ message: e.message })
-        }
-    })
     .post(async(req, res) => {
         try {
-            let newUser = await new Usuario(req.body).save()
+
+            // 1- Crear usuario en firebase
+
+            /*
+            try {
+                let newUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
+            }catch(e){
+                // Manejamos el error
+            }
+            */
+
+            // 2. Obtener uid del usuario creado en firebase
+            // 3. Crear usuario en mongoDB
+
+            let userData = {
+                firstname: "",
+                lastname: "",
+                profile: "",
+                email: "",
+                uid: "" // <===== Debe darmelo firebase
+            }
+            let newUser = await new Usuario(userData).save()
             res.status(200).json(newUser)
         } catch (e) {
             res.status(404).json({ message: e.message })
