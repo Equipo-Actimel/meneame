@@ -2,6 +2,7 @@
 //Dependencias usadas
 const express = require('express')
 const mongoose = require('mongoose')
+const config = require("./config")
 const cors = require('cors')
 
 //HAY QUE CONECTAR MONGOOSE AQUÍ
@@ -20,15 +21,29 @@ app.use(newsRoute)
 
 
 
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
     res.send('¡Hola mundo!')
 })
 
+async function connectDatabase() {
+    let db = mongoose.connection;
+    try {
+        await mongoose.connect('mongodb+srv://actimel:actimelizate@base1-4yusi.mongodb.net/test?retryWrites=true&w=majority', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+    } catch (err) {
+        console.log("Imposible conectar a la base de datos");
+        console.log(err);
+    }
+}
+async function init() {
+    await connectDatabase();
+    app.listen(PORT, () => console.log(`Conectado al puerto ${PORT}`));
+}
 
-app.listen(port, () => {
-    console.log(`Servidor activo en localhost:${port}!`)
-})
 
+init();
 module.exports = app

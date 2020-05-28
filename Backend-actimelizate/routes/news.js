@@ -1,26 +1,16 @@
 const express = require('express')
-const app = express()
 const router = express.Router()
-const cors = require('cors')
+const Noticia = require("../models/noticias");
 
-app.use(cors())
 
 router.route('/news')
-    .get((req, res) => {
-        res.json([{
-                id: 1,
-                title: "noticia 1",
-                content: "lo que sea 1"
-            },
-            {
-                id: 2,
-                title: "noticia 2",
-                content: "lo que sea 2"
-            }
-        ])
-    })
-    .post((req, res) => {
+    .get(async(req, res) => {
+        try {
+            let noticias = await Noticia.find().exec()
+            res.json(noticias);
+        } catch (err) {
+            res.status(404).json({ message: e.message })
+        }
 
     })
-
 module.exports = router
