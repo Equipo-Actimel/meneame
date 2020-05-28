@@ -2,9 +2,12 @@ const express = require('express')
 const router = express.Router()
 const Usuario = require("../models/users");
 const jwt = require("jsonwebtoken");
-const mustAuth = require("./middlewares/mustAuth");
+const mustAuth = require("../middlewares/mustAuth");
 const bearerToken = require("express-bearer-token");
-const config = require("./config");
+const firebase = require("firebase");
+const config = require("../config.js");
+const app = express();
+const { json } = require("express");
 
 app.use(json());
 app.use(bearerToken());
@@ -17,40 +20,33 @@ async function checkEmailAndPassword(email, pass) {
     let auth = await firebase.auth().signInWithEmailAndPassword(email, pass);
     return auth;
 }
-// Debe llamar a firebase y comprobar usuario y contraseña
-router.route('/auth/login')
-    .post(async(req, res) => {
-
-    })
 
 router.route('/users')
+    .get(async(req, res) => {
+        let itemList = await Usuario.find().exec();
+
+        res.json(itemList);
+    })
     .post(async(req, res) => {
         try {
+            let auth = await firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password);
 
-            // 1- Crear usuario en firebase
+            let usuarioMongo = {
+                email: req.body.email,
+                _id: auth.user.uid,
+                name: req.body.name,
+                surname: req.body.surname,
+                profile: req.body.profile
+            };
 
-            /*
-            try {
-                let newUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
-            }catch(e){
-                // Manejamos el error
-            }
-            */
+            let newUser = await new Usuario(usuarioMongo).save()
+            let userJSON = newUser.toJSON()
 
-            // 2. Obtener uid del usuario creado en firebase
-            // 3. Crear usuario en mongoDB
+            res.status(201).json(userJSON);
 
-            let userData = {
-                firstname: "",
-                lastname: "",
-                profile: "",
-                email: "",
-                uid: "" // <===== Debe darmelo firebase
-            }
-            let newUser = await new Usuario(userData).save()
-            res.status(200).json(newUser)
         } catch (e) {
             res.status(404).json({ message: e.message })
+            return
         }
     })
 
