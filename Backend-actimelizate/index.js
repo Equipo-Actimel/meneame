@@ -14,10 +14,12 @@ app.use(cors())
 
 //Traemos las rutas de ficheros externos
 const newsRoute = require('./routes/news')
+const usersRoute = require('./routes/users')
 
 
 //enganchamos las rutas
 app.use(newsRoute)
+app.use(usersRoute)
 
 
 
