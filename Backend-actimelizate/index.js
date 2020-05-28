@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 async function connectDatabase() {
     let db = mongoose.connection;
     try {
-        await mongoose.connect('mongodb+srv://actimel:actimelizate@base1-4yusi.mongodb.net/test?retryWrites=true&w=majority', {
+        await mongoose.connect('mongodb+srv://actimel:actimelizate@base1-4yusi.mongodb.net/news?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
