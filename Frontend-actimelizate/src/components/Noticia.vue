@@ -13,8 +13,6 @@
 
 
 <script>
-import axios from 'axios'
-
 export default {
   data(){
     return {
@@ -24,20 +22,25 @@ export default {
   },
   methods: {
       async añadirNoticia(){
-          const token = window.localStorage.getItem('token')
-          let Noticia = {
-              title: this.title,
-              body: this.body
+          try{
+            const token = window.localStorage.getItem('token')
+            let Noticia = {
+                title: this.title,
+                body: this.body
+            }
+            let newNoticia = await this.$http.post("news", Noticia, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            
+            this.title = ""
+            this.body = ""
+            this.$router.push('/news')
+          } catch(e){
+              console.log(e)
           }
-          let newNoticia = await this.$http.get("news", Noticia, {
-              headers: {
-                  Authorization: `Bearer ${token}`
-              }
-          })
           
-          this.title = ""
-          this.body = ""
-          this.$router.push('/')
       }
   }
 }
