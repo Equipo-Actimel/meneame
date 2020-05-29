@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -33,7 +32,7 @@ export default {
     };
   },
   async mounted() {
-    let response = await axios("http://localhost:3000/news");
+    let response = await this.$http.get("news");
     this.news = response.data;
   },
 };

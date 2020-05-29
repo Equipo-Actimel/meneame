@@ -1,18 +1,15 @@
 <template>
   <div id="app">
     <Nav />
-    <Login></Login>
     <router-view/>
   </div>
 </template>
 
 <script>
 import Nav from './components/Nav.vue'
-import Login from './components/Login'
 export default {
   components: {
-    Nav,
-    Login
+    Nav
   }
 }
 </script>

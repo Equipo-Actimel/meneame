@@ -14,8 +14,13 @@ router.route('/news')
     })
     .post(mustAuth(), async(req, res) => {
         try {
-            let newProduct = await new Noticia(req.body).save()
-            res.status(200).json(newProduct)
+            let articleData = {
+                title: req.body.title,
+                body: req.body.body
+            }
+
+            let newNoticia = await new Noticia(articleData).save()
+            res.status(200).json(newNoticia)
         } catch (e) {
             res.status(404).json({ message: e.message })
         }
@@ -24,7 +29,6 @@ router.route('/news')
 router.route('/news/:id')
     .get(async(req, res) => {
         try {
-
             let itemList = req.app.get('news')
             let searchId = req.params.id
 

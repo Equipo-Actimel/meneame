@@ -2,15 +2,18 @@
 //Dependencias usadas
 const express = require('express')
 const mongoose = require('mongoose')
+const bearerToken = require('express-bearer-token')
 const config = require("./config")
 const cors = require('cors')
 const app = express()
+const PORT = process.env.PORT || 3000
 
 //HAY QUE CONECTAR MONGOOSE AQUÍ
 
 //Configuramos middlewares
 app.use(express.json())
 app.use(cors())
+app.use(bearerToken())
 
 //Traemos las rutas de ficheros externos
 const newsRoute = require('./routes/news')
@@ -22,7 +25,6 @@ app.use(newsRoute)
 app.use(usersRoute)
 app.use(authRoute)
 
-const PORT = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
     res.send('¡Hola mundo!')

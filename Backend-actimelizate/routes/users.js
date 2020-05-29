@@ -32,8 +32,8 @@ router.route('/users')
             let auth = await firebase.auth().createUserWithEmailAndPassword(req.body.email, req.body.password);
 
             let usuarioMongo = {
-                email: req.body.email,
                 _id: auth.user.uid,
+                email: req.body.email,
                 name: req.body.name,
                 surname: req.body.surname,
                 profile: req.body.profile
