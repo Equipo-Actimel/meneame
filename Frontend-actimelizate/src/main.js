@@ -5,7 +5,7 @@ import store from './store'
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-axios.defaults.baseURL = "http://localhost:3000/"
+axios.defaults.baseURL = "https://actimeli-zate.herokuapp.com/"
 
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false

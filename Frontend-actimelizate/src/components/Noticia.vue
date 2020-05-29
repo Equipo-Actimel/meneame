@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             <form class="col-6">
                 <h3>¿Qué está pasando?</h3>
@@ -29,11 +29,12 @@ export default {
               title: this.title,
               body: this.body
           }
-          let newNoticia = await axios.post('http://localhost:3000/news', Noticia, {
+          let newNoticia = await this.$http.get("news", Noticia, {
               headers: {
                   Authorization: `Bearer ${token}`
               }
           })
+          
           this.title = ""
           this.body = ""
           this.$router.push('/')

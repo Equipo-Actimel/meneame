@@ -12,7 +12,8 @@ export default {
     };
   },
   async mounted() {
-    let response = await axios("http://localhost:3000/users");
+    
+    let response = await this.$http.get("users");
     this.users = response.data;
   },
 };
