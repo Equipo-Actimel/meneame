@@ -16,11 +16,6 @@ const JWT_PASSWORD = "supersecretpassword";
 
 firebase.initializeApp(config.firebaseConfig)
 
-async function checkEmailAndPassword(email, pass) {
-    let auth = await firebase.auth().signInWithEmailAndPassword(email, pass);
-    return auth;
-}
-
 router.route('/users')
     .get(async(req, res) => {
         let itemList = await Usuario.find().exec();
